@@ -1,17 +1,17 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Weather from "./Components/Weather";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 //---- API KEY ----//
-const apiKey = "8ddceeacaf8b95fe943c88fc8389dee0"
+const apiKey = "2f9136700b550eb99147e534139fc975"
 
 const Title = () => {
   return(
 
     //----- Basic text information on screen ----//
     <div>
-      <h1 className="title-cpntainer__title">Weather Finder</h1>
+      <h1 className="title-container__title">Weather Finder</h1>
       <h3 className="title-container__subtitle">
         Find out temperature, conditions and more
       </h3>
@@ -31,7 +31,7 @@ const Form = ({onWeather}) => {
 }
 
 //---- Getting the weather information ----//
-class App extends Comment {
+class App extends Component {
   state = {
     temperature: undefined,
     city: undefined,
@@ -48,12 +48,12 @@ class App extends Comment {
     //---- making sure correct information is displayed ----//
     if (city && country) {
       try{
-        const apiCall = fetch(
-          `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`
+        const apiCall = await fetch(
+          `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`
         )
         const {main, sys, name, weather} = await apiCall.json()
         this.setState({
-          temperature: main.temperature,
+          temperature: main.temp,
           city: name,
           country: sys.country,
           humidity: main.humidity,
@@ -82,7 +82,7 @@ class App extends Comment {
         <div className="main">
           <div className="container" style={{width: "100%"}}>
             <div className="row">
-              <div className="col-xs-5 form-container">
+              <div className="col-xs-5 title-container">
                 <Title />
               </div>
               <div className="col-xs-7 form-container">
